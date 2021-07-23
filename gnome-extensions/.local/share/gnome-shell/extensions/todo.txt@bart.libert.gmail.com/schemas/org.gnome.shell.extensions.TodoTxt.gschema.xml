@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schemalist gettext-domain="gnome-shell-extensions-TodoTxt">
+  <schema path="/org/gnome/shell/extensions/TodoTxt/" id="org.gnome.shell.extensions.TodoTxt">
+    <key name="todotxt-location" type="s">
+      <default>'~/.local/share/todo.txt/todo.txt'</default>
+      <summary>Location of the todo.txt file</summary>
+    </key>
+    <key name="donetxt-location" type="s">
+      <default>'~/.local/share/todo.txt/done.txt'</default>
+      <summary>Location of the done.txt file</summary>
+    </key>
+    <key name="auto-archive" type="b">
+      <default>false</default>
+      <summary>Auto-archive done tasks to the done.txt file or not</summary>
+    </key>
+    <key name="show-done" type="b">
+      <default>true</default>
+      <summary>Show done unarchived tasks or not</summary>
+    </key>
+    <key name="add-creation-date" type="b">
+      <default>false</default>
+      <summary>Whether the creation date should be automatically added to new tasks</summary>
+    </key>
+    <key name="click-action" type="i">
+      <default>0</default>
+      <summary>What to do when a task is clicked. Valid values: 0 (edit task), 1 (mark as done or edit), 2 (nothing)</summary>
+    </key>
+    <key name="confirm-delete" type="b">
+      <default>true</default>
+      <summary>Show confirmation dialog before deleting item</summary>
+    </key>
+    <key name="keep-open-after-new" type="b">
+      <default>true</default>
+      <summary>The tasks menu will be kept open after a new task is added and the new task entry will be focused</summary>
+    </key>
+    <key name="task-insert-location" type="i">
+      <default>0</default>
+      <summary>Where to insert a new task. Valid values: 0 (at the bottom of the file), 1 (at the top of the file)</summary>
+    </key>
+    <key name="open-key" type="as">
+      <default><![CDATA[['<Super>t']]]></default>
+      <summary>Shortcut key to open the todo.txt extension and focus the new task entry field</summary>
+    </key>
+    <key name="debug-level" type="i">
+      <default>250</default>
+      <summary>Debug level. The lower this is, the more information will be shown. Valid values: 0 (flow), 50 (debug), 100 (detail), 150 (info), 200 (warning), 250 (error)</summary>
+    </key>
+    <key name="settings-level" type="i">
+      <default>0</default>
+      <summary>Settings level. Depending on this setting, more settings will be available. Valid values: 0 (basic), 100 (advanced), 250 (expert)</summary>
+    </key>
+    <key name="group-by" type="i">
+      <default>0</default>
+      <summary>Parameter to group the tasks by. Valid values: 0 (no grouping), 1 (group by project), 2 (group by context)</summary>
+    </key>
+    <key name="group-ungrouped" type="b">
+      <default>false</default>
+      <summary>When using grouping, should parameters without a group be put in a separate group or not?</summary>
+    </key>
+    <key name="show-number-of-group-elements" type="b">
+      <default>true</default>
+      <summary>Should the total number of elements in a group be shown or not?</summary>
+    </key>
+    <key name="show-done-or-archive-button" type="b">
+      <default>true</default>
+      <summary>Whether the 'mark as done' or 'archive' button is visible</summary>
+    </key>
+    <key name="show-delete-button" type="b">
+      <default>true</default>
+      <summary>Whether the 'delete' button is visible</summary>
+    </key>
+    <key name="show-edit-button" type="b">
+      <default>false</default>
+      <summary>Whether the 'edit' button is visible</summary>
+    </key>
+    <key name="show-priority-buttons" type="b">
+      <default>false</default>
+      <summary>Wether the 'priority up' and 'priority down' buttons are visible</summary>
+    </key>
+    <key name="show-projects-label" type="b">
+      <default>true</default>
+      <summary>Whether the projects are visible</summary>
+    </key>
+    <key name="show-contexts-label" type="b">
+      <default>true</default>
+      <summary>Whether the contexts are visible</summary>
+    </key>
+    <key name="show-new-task-entry" type="b">
+      <default>true</default>
+      <summary>Whether the 'new task' entry is visible</summary>
+    </key>
+    <key name="show-open-in-text-editor" type="b">
+      <default>false</default>
+      <summary>Whether 'open todo.txt file in text editor' is shown</summary>
+    </key>
+    <key name="url-color" type="i">
+      <default>1</default>
+      <summary>Color to display URLs in tasks. Valid values: 0 (task color), 1 (theme color), 2 (custom color)</summary>
+    </key>
+    <key name="custom-url-color" type="s">
+      <default>'rgb(0,0,0)'</default>
+      <summary>Custom color to use for URLs if that option is selected</summary>
+    </key>
+    <key name="truncate-long-tasks" type="b">
+      <default>false</default>
+      <summary>Whether long tasks are shown truncated instead of full width</summary>
+    </key>
+    <key name="long-tasks-max-width" type="i">
+      <default>300</default>
+      <summary>Max width in pixels for tasks labels</summary>
+    </key>
+    <key name="long-tasks-expansion-mode" type="i">
+      <default>0</default>
+      <summary>Mode to expand ellipsized tasks. Valid values: 0 (scroll on label), 1 (expansion button), 2 (both)</summary>
+    </key>
+    <key name="long-tasks-ellipsize-mode" type="i">
+      <default>1</default>
+      <summary>How truncated tasks are ellipsized. Valid values: 0 (omit start characters), 1 (omit middle characters), 2 (omit end characters)</summary>
+    </key>
+    <key name="show-status-icon" type="b">
+      <default>true</default>
+      <summary>Whether to show an icon in the top bar</summary>
+    </key>
+    <key name="display-format-string" type="s">
+      <default>'{unarchived}'</default>
+      <summary>Format string that specifies what is displayed in the top bar. Supported tokens: {unarchived} to show the number of tasks that were not yet archived and {undone} to show the number of tasks that are not yet completed.</summary>
+    </key>
+    <key name="hide-if-pattern-zero" type="i">
+      <default>0</default>
+      <summary>What to hide in the top bar if the specified pattern equals zero</summary>
+    </key>
+    <key name="hide-pattern" type="s">
+      <default>'{unarchived}'</default>
+      <summary>Pattern that is evaluated when 'hide-if-pattern-zero' is true. If this pattern evaluates to zero, the top bar number will be hidden</summary>
+    </key>
+    <key name="style-priorities" type="b">
+      <default>false</default>
+      <summary>Whether tasks should be styled according to their priority</summary>
+    </key>
+    <key name="priority-on-done" type="i">
+      <default>0</default>
+      <summary>What to do with priorities when a task is completed. Valid options: 0 (remove priority), 1 (keep priority, prefixed with pri:), 2 (keep the priority as-is, this is not according to the todo.txt standard)</summary>
+    </key>
+    <key name="order-by-priority" type="b">
+      <default>true</default>
+      <summary>Should the elements be ordered by their priority?</summary>
+    </key>
+    <key name="only-show-priority-above" type="s">
+      <default>''</default>
+      <summary>Only show tasks with a priority of or above</summary>
+    </key>
+    <key name="priorities-markup" type="a{s(bsbb)}">
+      <default>{'A':(true, 'rgb(237,212,0)', true, false), 'B':(true, 'rgb(115,210,22)', false, false), 'C':(true, 'rgb(0,153,204)', true, false)}</default>
+      <summary>How to display different priorities. Format: '(priority: change_color, color, bold, italic)'</summary>
+    </key>
+    <key name="enable-hidden-extension" type="b">
+      <default>false</default>
+      <summary>Whether the 'hidden' extension is enabled. If true, tasks containing 'h:1' will not be shown</summary>
+    </key>
+  </schema>
+</schemalist>

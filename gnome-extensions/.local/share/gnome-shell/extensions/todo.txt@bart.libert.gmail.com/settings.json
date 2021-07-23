@@ -1,0 +1,648 @@
+{
+    "General":
+    {
+        "type":"category",
+        "Files":
+        {
+            "type":"subcategory",
+            "todotxt-location":
+            {
+                "type": "path",
+                "default_value": "~/.local/share/todo.txt/todo.txt",
+                "summary": "Location of the todo.txt file",
+                "human_name": "Todo.txt location",
+                "help": "Location of the text file that contains the tasks in todo.txt syntax",
+                "extra_params":
+                {
+                    "description": "Select location of todo.txt file"
+                },
+                "level":"0"
+            },
+            "donetxt-location":
+            {
+                "type": "path",
+                "default_value": "~/.local/share/todo.txt/done.txt",
+                "summary": "Location of the done.txt file",
+                "level":"0",
+                "human_name": "Done.txt location",
+                "help": "Location of the text file that contains completed (archived) tasks",
+                "extra_params":
+                {
+                    "description": "Select location of done.txt file"
+                }
+            }
+        },
+        "Behavior":
+        {
+            "type":"subcategory",
+            "auto-archive":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Auto-archive done tasks to the done.txt file or not",
+                "human_name": "Auto-archive done tasks",
+                "help":"Whether completed tasks will be automatically archived (i.e. moved to the done.txt file)",
+                "level":"100"
+            },
+            "show-done":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Show done unarchived tasks or not",
+                "human_name": "Show done tasks",
+                "help":"Whether completed tasks that are not archived will be shown",
+                "level":"250"
+            },
+            "add-creation-date":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Whether the creation date should be automatically added to new tasks",
+                "human_name":"Auto-add creation date to new tasks",
+                "help":"Whether a creation date is automatically added to newly created tasks",
+                "level":"100"
+            },
+            "click-action":
+            {
+                "type": "integer",
+                "default_value": "0",
+                "summary": "What to do when a task is clicked. Valid values: 0 (edit task), 1 (mark as done or edit), 2 (nothing)",
+                "human_name":"Action on clicking task",
+                "help":"What to do when a task is clicked",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.CLICK_ACTION_EDIT#":"Edit task",
+                        "#SharedConstants.CLICK_ACTION_DONE#":"Mark task as done or archive task",
+                        "#SharedConstants.CLICK_ACTION_NONE#":"Nothing"
+                    }
+                },
+                "level":"250"
+            },
+            "confirm-delete":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Show confirmation dialog before deleting item",
+                "human_name":"Confirm task deletion",
+                "help":"Whether a confirmation dialog is shown before deleting a task",
+                "level":"0"
+            },
+            "keep-open-after-new":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "The tasks menu will be kept open after a new task is added and the new task entry will be focused",
+                "human_name": "Keep open menu after adding new task",
+                "help": "Keeps open the tasks menu after a new task is added. The new task entry will be focused",
+                "level":"100"
+            },
+            "task-insert-location":
+            {
+                "type": "integer",
+                "default_value":"0",
+                "summary": "Where to insert a new task. Valid values: 0 (at the bottom of the file), 1 (at the top of the file)",
+                "human_name": "Location to insert new task",
+                "help": "Where in the text-file the new task will be added. Also moves insert box to the top of the interface.",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.TASK_INSERT_LOCATION_BOTTOM#":"Bottom of the file",
+                        "#SharedConstants.TASK_INSERT_LOCATION_TOP#":"Top of the file"
+                    }
+                },
+                "level":"100"
+            }
+        },
+        "Shortcuts":
+        {
+            "type":"subcategory",
+            "open-key":
+            {
+                "type": "shortcut",
+                "default_value": "['<Super>t']",
+                "summary":"Shortcut key to open the todo.txt extension and focus the new task entry field",
+                "level":"0",
+                "extra_params":
+                {
+                    "shortcuts":
+                    {
+                        "open-key":"Open task list"
+                    }
+                }
+            }
+        },
+        "Levels":
+        {
+            "type":"subcategory",
+            "debug-level":
+            {
+                "type": "integer",
+                "default_value": "250",
+                "summary": "Debug level. The lower this is, the more information will be shown. Valid values: 0 (flow), 50 (debug), 100 (detail), 150 (info), 200 (warning), 250 (error)",
+                "human_name":"Debug level",
+                "help":"Level of debug information",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.LOG_FLOW#":"Flow",
+                        "#SharedConstants.LOG_DEBUG#":"Debug",
+                        "#SharedConstants.LOG_DETAIL#":"Detail",
+                        "#SharedConstants.LOG_INFO#":"Info",
+                        "#SharedConstants.LOG_WARNING#":"Warning",
+                        "#SharedConstants.LOG_ERROR#":"Error"
+                    }
+                },
+                "level":"250"
+            },
+            "settings-level":
+            {
+                "type":"integer",
+                "default_value":"0",
+                "summary":"Settings level. Depending on this setting, more settings will be available. Valid values: 0 (basic), 100 (advanced), 250 (expert)",
+                "human_name": "Settings level",
+                "help":"Level of settings that is shown",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.SETTINGS_BASIC#":"Basic",
+                        "#SharedConstants.SETTINGS_ADVANCED#":"Advanced",
+                        "#SharedConstants.SETTINGS_EXPERT#":"Expert"
+                    }
+                },
+                "level":"0"
+            }
+        }
+    },
+    "Display":
+    {
+        "type":"category",
+        "Grouping":
+        {
+            "type":"subcategory",
+            "group-by":
+            {
+                "type": "integer",
+                "default_value": "0",
+                "summary": "Parameter to group the tasks by. Valid values: 0 (no grouping), 1 (group by project), 2 (group by context)",
+                "human_name": "Group tasks by",
+                "help": "Tasks can be grouped together based on the selected property",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.NO_GROUPING#":"No grouping",
+                        "#SharedConstants.GROUP_BY_PROJECTS#":"Projects",
+                        "#SharedConstants.GROUP_BY_CONTEXTS#":"Contexts"
+                    }
+                },
+                "level":"0"
+            },
+            "group-ungrouped":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "When using grouping, should parameters without a group be put in a separate group or not?",
+                "human_name":"Put ungrouped tasks in separate group",
+                "help":"Tasks that don't have the grouping priority can be put in a special 'ungrouped' group, or shown outside any groups",
+                "level":"0",
+                "extra_params":
+                {
+                    "sensitivity":
+                    {
+                        "group-by":
+                        {
+                            "#SharedConstants.NO_GROUPING#":false,
+                            "#SharedConstants.GROUP_BY_PROJECTS#":true,
+                            "#SharedConstants.GROUP_BY_CONTEXTS#":true
+                        }
+                    }
+                }
+            },
+            "show-number-of-group-elements":
+            {
+                "type": "boolean",
+                "default_value":"true",
+                "summary": "Should the total number of elements in a group be shown or not?",
+                "human_name":"Show number of tasks in group",
+                "help":"The number of tasks in a subgroup can be shown in the interface",
+                "level":"100",
+                "extra_params":
+                {
+                    "sensitivity":
+                    {
+                        "group-by":
+                        {
+                            "#SharedConstants.NO_GROUPING#":false,
+                            "#SharedConstants.GROUP_BY_PROJECTS#":true,
+                            "#SharedConstants.GROUP_BY_CONTEXTS#":true
+                        }
+                    }
+                }
+            }
+        },
+        "Interface elements":
+        {
+            "type":"subcategory",
+            "show-done-or-archive-button":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Whether the 'mark as done' or 'archive' button is visible",
+                "human_name":"Show done/archive task button",
+                "help":"Whether a button is shown to mark active tasks as completed or to archive completed tasks, if auto-archive is off",
+                "level":"0"
+            },
+            "show-delete-button":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Whether the 'delete' button is visible",
+                "human_name":"Show delete task button",
+                "help":"Whether a button is shown to delete a task",
+                "level":"0"
+            },
+            "show-edit-button":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Whether the 'edit' button is visible",
+                "human_name":"Show edit task button",
+                "help":"Whether a button is shown to edit a task",
+                "level":"100"
+            },
+            "show-priority-buttons":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Wether the 'priority up' and 'priority down' buttons are visible",
+                "human_name":"Show change task priority buttons",
+                "help":"Whether arrows are shown to increase or decrease the task priority",
+                "level":"100"
+            },
+            "show-projects-label":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Whether the projects are visible",
+                "human_name":"Show projects",
+                "help":"Whether projects are shown in the interface (does not affect grouping)",
+                "level":"100"
+            },
+            "show-contexts-label":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Whether the contexts are visible",
+                "human_name":"Show contexts",
+                "help":"Whether contexts are shown in the interface (does not affect grouping)",
+                "level":"100"
+            },
+            "show-new-task-entry":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Whether the 'new task' entry is visible",
+                "human_name":"Show new task entry",
+                "help":"Whether an entry field is shown to create new tasks (new tasks can also be added by modifying the todo.txt file)",
+                "level":"250"
+            },
+            "show-open-in-text-editor":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Whether 'open todo.txt file in text editor' is shown",
+                "human_name":"Show 'open in text editor'",
+                "help":"Whether a menu element is shown to open the todo.txt file in the default text editor",
+                "level":"250"
+            }
+        },
+        "URL Color":
+        {
+            "type":"subcategory",
+            "url-color":
+            {
+                "type": "integer",
+                "default_value": "1",
+                "summary": "Color to display URLs in tasks. Valid values: 0 (task color), 1 (theme color), 2 (custom color)",
+                "human_name": "Color for detected URLs",
+                "help": "When URLs are detected in a task, they will be displayed in this color",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.URL_COLOR_TASK#":"Same as task",
+                        "#SharedConstants.URL_COLOR_THEME#":"Get color from theme",
+                        "#SharedConstants.URL_COLOR_CUSTOM#":"Custom color"
+                    }
+                },
+                "level":"100"
+            },
+            "custom-url-color":
+            {
+                "type": "string",
+                "default_value":"rgb(0,0,0)",
+                "summary": "Custom color to use for URLs if that option is selected",
+                "widget":"color",
+                "human_name":"Custom color for URLS",
+                "help": "This color will be used for URLs if 'Custom color' was selected above",
+                "extra_params":
+                {
+                    "sensitivity":
+                    {
+                        "url-color":
+                        {
+                            "#SharedConstants.URL_COLOR_TASK#":false,
+                            "#SharedConstants.URL_COLOR_THEME#":false,
+                            "#SharedConstants.URL_COLOR_CUSTOM#":true
+                        }
+                    }
+                },
+                "level":"100"
+            }
+        },
+        "Truncating":
+        {
+            "type":"subcategory",
+            "truncate-long-tasks":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Whether long tasks are shown truncated instead of full width",
+                "human_name":"Truncate long tasks",
+                "help":"Whether long tasks are truncated if they exceed a specified width",
+                "level":"100"
+            },
+            "long-tasks-max-width":
+            {
+                "type": "integer",
+                "default_value": "300",
+                "summary": "Max width in pixels for tasks labels",
+                "human_name":"Maximum task width in pixels",
+                "help":"Tasks will be truncated to this width (specified in pixels) if truncating is enabled",
+                "widget":"spin",
+                "extra_params":
+                {
+                    "range":
+                    {
+                        "min": 1,
+                        "max": 65535,
+                        "step": 1
+                    },
+                    "sensitivity":
+                    {
+                        "truncate-long-tasks":
+                        {
+                            "false":false,
+                            "true":true
+                        }
+                    }
+                },
+                "level":"250"
+            },
+            "long-tasks-expansion-mode":
+            {
+                "type": "integer",
+                "default_value": "0",
+                "summary": "Mode to expand ellipsized tasks. Valid values: 0 (scroll on label), 1 (expansion button), 2 (both)",
+                "human_name":"Method to expand/contract truncated tasks",
+                "help":"The action that will initiate expansion and contraction of tasks",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.TASK_EXPAND_SCROLL#":"Scroll up/down to contract/expand",
+                        "#SharedConstants.TASK_EXPAND_BUTTON#":"Dedicated button",
+                        "#SharedConstants.TASK_EXPAND_BOTH#":"Both"
+                    },
+                    "sensitivity":
+                    {
+                        "truncate-long-tasks":
+                        {
+                            "false":false,
+                            "true":true
+                        }
+                    }
+                },
+                "level":"100"
+            },
+            "long-tasks-ellipsize-mode":
+            {
+                "type": "integer",
+                "default_value": "1",
+                "summary": "How truncated tasks are ellipsized. Valid values: 0 (omit start characters), 1 (omit middle characters), 2 (omit end characters)",
+                "human_name":"Location to truncate long tasks",
+                "help":"The location in the task text where the ellipsization will occur",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.TASK_ELLIPSIZE_START#":"Start",
+                        "#SharedConstants.TASK_ELLIPSIZE_MIDDLE#":"Middle",
+                        "#SharedConstants.TASK_ELLIPSIZE_END#":"End"
+                    },
+                    "sensitivity":
+                    {
+                        "truncate-long-tasks":
+                        {
+                            "false":false,
+                            "true":true
+                        }
+                    }
+                },
+                "level":"250"
+            }
+        },
+        "Top Bar":
+        {
+            "type":"subcategory",
+            "help-format":
+            {
+                "type": "help",
+                "help": "Templates can contain the following patterns: \n\t{undone}: number of tasks that are not completed yet\n\t{unarchived}: number of tasks that are not archived yet\n\nIf you surround an expression with pipe characters (|), the pattern will be mathematically evaluated after the replacements have been done.\nFor example: '{unarchived}-{undone}' will render as '3-2' for 3 unarchived and 2 undone tasks, but '|{unarchived}-{undone}| will render as '1'\n\n\nYou can also use a prefix to pad a number.\nThe prefix consists of three elements:\n\tA number indicating the desired width. If the number is wider, no padding will be done\n\tA letter indicating the padding direction:\n\t\tl: Pad left\n\t\tr: Pad right\n\t\tL: Pad at both sides, but more at left side if uneven padding\n\t\tR: Pad at both sides, but more at right side if uneven padding\n\tThe character to pad with (optional, default is a space)\n\tA ':' to split the prefix and the wildcard\n\nExamples:\n\t{3lx:undone} will render as xx2 for 2 undone tasks\n\t{4R0:unarchived} will render as 0300 if there are 3 unarchived tasks",
+                "level":"100"
+            },
+            "help-hide":{
+                "type": "help",
+                "help": "\n\nNote that padding and | cannot be used for the zero-matching pattern",
+                "level":"250"
+            },
+            "help-hidden-pattern": {
+                "type":"help",
+                "help": "\n\nWhen using the 'hidden' extension, an extra pattern is available:\n\t{hidden}: number of hidden tasks",
+                "level":"100",
+                "extra_params":
+                {
+                    "sensitivity":
+                    {
+                        "enable-hidden-extension":
+                        {
+                            "false":false,
+                            "true":true
+                        }
+                    }
+                }
+            },
+            "show-status-icon":
+            {
+                "type": "boolean",
+                "default_value": "true",
+                "summary": "Whether to show an icon in the top bar",
+                "human_name": "Show icon",
+                "help": "If this is true, an icon will be shown in the top bar",
+                "level":"0"
+            },
+            "display-format-string":
+            {
+                "type": "string",
+                "default_value": "{unarchived}",
+                "summary": "Format string that specifies what is displayed in the top bar. Supported tokens: {unarchived} to show the number of tasks that were not yet archived and {undone} to show the number of tasks that are not yet completed.",
+                "human_name":"Template string for display",
+                "help":"Template that determines what is displayed in the top bar",
+                "level":"100"
+            },
+            "hide-if-pattern-zero":
+            {
+                "type" :"integer",
+                "default_value": "0",
+                "summary": "What to hide in the top bar if the specified pattern equals zero",
+                "human_name":"Hide if pattern is zero",
+                "help":"If the specified pattern is zero, the elements specified here will be hidden",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.HIDE_ON_PATTERN_ZERO_NOTHING#":"Nothing",
+                        "#SharedConstants.HIDE_ON_PATTERN_ZERO_TEXT#":"Text",
+                        "#SharedConstants.HIDE_ON_PATTERN_ZERO_ICON#":"Icon",
+                        "#SharedConstants.HIDE_ON_PATTERN_ZERO_BOTH#":"Both"
+                    }
+                },
+                "level":"250"
+            },
+            "hide-pattern":
+            {
+                "type": "string",
+                "default_value": "{unarchived}",
+                "summary": "Pattern that is evaluated when 'hide-if-pattern-zero' is true. If this pattern evaluates to zero, the top bar number will be hidden",
+                "human_name":"Pattern to match for zero",
+                "help":"If this template evaluates to zero, the top bar element will be hidden. Shortcuts still work.",
+                "extra_params":
+                {
+                    "sensitivity":
+                    {
+                        "hide-if-pattern-zero":
+                        {
+                            "#SharedConstants.HIDE_ON_PATTERN_ZERO_NOTHING#":false,
+                            "#SharedConstants.HIDE_ON_PATTERN_ZERO_TEXT#":true,
+                            "#SharedConstants.HIDE_ON_PATTERN_ZERO_ICON#":true,
+                            "#SharedConstants.HIDE_ON_PATTERN_ZERO_BOTH#":true
+                        }
+                    }
+                },
+                "level":"250"
+            }
+        }
+    },
+    "Priorities":
+    {
+        "type":"category",
+        "General":
+        {
+            "type":"subsection",
+            "style-priorities":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Whether tasks should be styled according to their priority",
+                "human_name":"Style priorities",
+                "help":"Whether tasks with a certain priority are shown in a specific style",
+                "level":"0"
+            },
+            "priority-on-done":
+            {
+                "type":"integer",
+                "default_value":"0",
+                "summary":"What to do with priorities when a task is completed. Valid options: 0 (remove priority), 1 (keep priority, prefixed with pri:), 2 (keep the priority as-is, this is not according to the todo.txt standard)",
+                "human_name":"Priority on task completion",
+                "help":"What should be done with the priority of a task when that task is completed",
+                "extra_params":
+                {
+                    "options":
+                    {
+                        "#SharedConstants.TASK_DONE_PRIORITY_REMOVE#":"Remove",
+                        "#SharedConstants.TASK_DONE_PRIORITY_KEEP_PRI#":"Keep with pri: prefix",
+                        "#SharedConstants.TASK_DONE_PRIORITY_KEEP_NON_STANDARD#":"Keep as is (non-standard)"
+                    }
+                },
+                "level":"250"
+            },
+            "order-by-priority":
+            {
+                "type": "boolean",
+                "default_value":"true",
+                "summary": "Should the elements be ordered by their priority?",
+                "human_name": "Order elements by their priority",
+                "help":"Whether the tasks with a higher priority should be shown higher up in the list or the order should be left as in the todo.txt file",
+                "level":"250"
+            },
+            "only-show-priority-above":
+            {
+                "type":"string",
+                "default_value":"",
+                "summary":"Only show tasks with a priority of or above",
+                "human_name":"Only show tasks with a priority of or above",
+                "help":"Only show tasks with a given or higher priority. Leave empty to show all tasks.",
+                "level":"250"
+            }
+        },
+        "Styles":
+        {
+            "type":"subsection",
+            "priorities-markup":
+            {
+                "type": "dictionary",
+                "signature" : "a{s(bsbb)}",
+                "value_object" : "markup.Markup",
+                "default_value": "{'A':(true, 'rgb(237,212,0)', true, false), 'B':(true, 'rgb(115,210,22)', false, false), 'C':(true, 'rgb(0,153,204)', true, false)}",
+                "summary": "How to display different priorities. Format: '(priority: change_color, color, bold, italic)'",
+                "help":"The way that tasks with different priorities are displayed",
+                "human_name":"Priority markup",
+                "widget":"priorityMarkup",
+                "level":"0",
+                "extra_params":
+                {
+                    "sensitivity":
+                    {
+                        "style-priorities":
+                        {
+                            "false":false,
+                            "true":true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "Extensions":
+    {
+        "type":"category",
+        "Extensions":
+        {
+            "type": "subsection",
+            "enable-hidden-extension":
+            {
+                "type": "boolean",
+                "default_value": "false",
+                "summary": "Whether the 'hidden' extension is enabled. If true, tasks containing 'h:1' will not be shown",
+                "help":"If the hidden extension is enabled, tasks containing 'h:1' will not be shown",
+                "human_name": "Hidden tasks extension",
+                "level":"100"
+            }
+        }
+    }
+}

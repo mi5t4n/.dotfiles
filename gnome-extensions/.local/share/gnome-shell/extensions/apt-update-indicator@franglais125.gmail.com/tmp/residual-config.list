@@ -1,0 +1,11 @@
+bamfdaemon
+libnvidia-compute-440:amd64
+libnvidia-compute-460:amd64
+linux-image-5.4.0-42-generic
+linux-modules-5.4.0-42-generic
+linux-modules-extra-5.4.0-42-generic
+linux-modules-nvidia-440-5.4.0-42-generic
+linux-modules-nvidia-460-5.8.0-59-generic
+nvidia-compute-utils-460
+nvidia-dkms-460
+nvidia-kernel-common-460
